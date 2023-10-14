@@ -21,12 +21,19 @@ def daily_volume_general():
     """
     Asks the user to input the unit volume of delivery colleagues will be expected to process
     """
+    while True:
 
 
-    general_vol = input("Please enter volumes for general merchandise deliveries for the the week: ")
+        general_vol = input("Please enter volumes for general merchandise deliveries for the the week: ")
 
-    daily_vol_gen = general_vol.split(",")
-    validate_data(daily_vol_gen)
+        daily_vol_gen = general_vol.split(",")
+        validate_data(daily_vol_gen)
+
+        if validate_data(daily_vol_gen):
+            print("data is valid for general..")
+            break
+    return daily_vol_gen
+
 
 def daily_volume_beauty():
     """
@@ -34,11 +41,18 @@ def daily_volume_beauty():
     follows a different path to general delivery.
     """
 
+    while True:
+
+        beauty_vol = input("Please enter volumes for beauty deliveries for the the week: ")
     
-    beauty_vol = input("Please enter volumes for beauty deliveries for the the week: ")
- 
-    daily_vol_bty = beauty_vol.split(",")
-    validate_data(daily_vol_bty)
+        daily_vol_bty = beauty_vol.split(",")
+        validate_data(daily_vol_bty)
+
+        if validate_data(daily_vol_bty):
+            print("data is valid for beauty...")
+            break
+    return daily_vol_bty
+
 
 
 def validate_data(values):
@@ -53,6 +67,16 @@ def validate_data(values):
         f"The number of values entered must total 5, you entered{values}")
     except ValueError as e:
         print(f"Invalid date: {e}, please try again.\n")
+        return False
+
+    return True
+
+
+data_g = daily_volume_general()
+data_b = daily_volume_beauty()
+
+
+
 
 
 
