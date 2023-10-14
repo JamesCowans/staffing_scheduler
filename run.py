@@ -47,6 +47,7 @@ def validate_data(values):
     is inputted or cannot be converted
     """
     try:
+        [int(value) for value in values]
         if len(values) !=5:
             raise ValueError(
         f"The number of values entered must total 5, you entered{values}")
