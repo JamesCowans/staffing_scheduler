@@ -96,7 +96,7 @@ def calculate_staff_requirements_general():
 
     department_prod = SHEET.worksheet("department_prod").get_all_values()
     department_prod_row = department_prod[-1]
-    print(department_prod)
+    print(department_prod_row)
 
 
 #def calculate_staff_requirements_beauty():
