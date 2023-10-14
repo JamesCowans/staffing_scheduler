@@ -92,6 +92,15 @@ def update_volumes_worksheet_beauty(data_b):
     delivery_volumes_beauty_worksheet.append_row(data_b)
     print("Beauty products spreadsheet updated sucessfully...\n")
 
+def calculate_staff_requirements_general():
+
+    department_prod = SHEET.worksheet("department_prod").get_all_values()
+    department_prod_row = department_prod[-1]
+    print(department_prod)
+
+
+#def calculate_staff_requirements_beauty():
+
 
 def main():
     """
@@ -102,6 +111,7 @@ def main():
     data_g = daily_volume_general()
     update_volumes_worksheet_beauty(data_b)
     update_volumes_worksheet_general(data_g)
+    calculate_staff_requirements_general()
     
     
     
