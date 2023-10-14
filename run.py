@@ -12,9 +12,9 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('dc_productivity')
 
-department_prod = SHEET.worksheet('department_prod')
+decant = SHEET.worksheet('decant')
 
-data = department_prod.get_all_values()
+data = decant.get_all_values()
 
 
 def daily_volume_general():
@@ -92,11 +92,24 @@ def update_volumes_worksheet_beauty(data_b):
     delivery_volumes_beauty_worksheet.append_row(data_b)
     print("Beauty products spreadsheet updated sucessfully...\n")
 
-def calculate_staff_requirements_general():
+def calculate_staff_requirements_decant(gen_d):
+    """
+    Calculates the staffing requirements of the decant department,
+    all colleagues have a productivity target set within the decant spreadsheet by day
+    and all work 8 hours per day.
+    """
+    
 
-    department_prod = SHEET.worksheet("department_prod").get_all_values()
-    department_prod_row = department_prod[-1]
-    print(department_prod_row)
+    decant = SHEET.worksheet("decant").get_all_values()
+    decant_row = decant[-1]
+   #print(decant)
+
+    gen_requirements = []
+    for volume, staffing in zip(gen_d, decant_row):
+        req_hours = int(volume) // int(staffing)
+        req = (req_hours) // 8 
+        gen_requirements.append(req)
+    print(gen_requirements)
 
 
 #def calculate_staff_requirements_beauty():
@@ -111,7 +124,7 @@ def main():
     data_g = daily_volume_general()
     update_volumes_worksheet_beauty(data_b)
     update_volumes_worksheet_general(data_g)
-    calculate_staff_requirements_general()
+    decant_staff_req = calculate_staff_requirements_decant(data_g)
     
     
     
