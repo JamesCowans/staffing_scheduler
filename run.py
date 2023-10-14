@@ -23,7 +23,6 @@ def daily_volume_general():
     """
     while True:
 
-
         general_vol = input("Please enter volumes for general merchandise deliveries for the the week: ")
 
         daily_vol_gen = general_vol.split(",")
@@ -63,8 +62,7 @@ def validate_data(values):
     try:
         [int(value) for value in values]
         if len(values) !=5:
-            raise ValueError(
-        f"The number of values entered must total 5, you entered{values}")
+            raise ValueError( f"The number of values entered must total 5, you entered{values}")
     except ValueError as e:
         print(f"Invalid date: {e}, please try again.\n")
         return False
@@ -72,25 +70,45 @@ def validate_data(values):
     return True
 
 
-data_g = daily_volume_general()
-data_b = daily_volume_beauty()
 
 
 
+def update_volumes_worksheet_general(data_g):
+    """
+    Adds the delivery volume to the general merchandise spreadsheet
+    """
+    print("Updating General Merchandise spreadsheet...\n")
+    delivery_volumes_general_worksheet = SHEET.worksheet('delivery_volumes_general')
+    delivery_volumes_general_worksheet.append_row(data_g)
+    print("General Merchandise spreadsheet updated sucessfully...\n")
 
-
+    
+def update_volumes_worksheet_beauty(data_b):
+    """
+    Adds the delivery volume to the beauty products spreadsheet
+    """
+    print("Updating Beauty products spreadsheet...\n")
+    delivery_volumes_beauty_worksheet = SHEET.worksheet('delivery_volumes_beauty')
+    delivery_volumes_beauty_worksheet.append_row(data_b)
+    print("Beauty products spreadsheet updated sucessfully...\n")
 
 
 def main():
     """
     runs the full program
     """
-    print("Welcome to the DC staff schedule assistant...\n")
-    print("When entering data please ensure you enter the full 5 days worth seperated by a comma..\n")
-    print("Example: 14543, 34322, 23253, 23242, 23232")
-    daily_volume_general()
-    daily_volume_beauty()
     
-
+    data_b = daily_volume_beauty()
+    data_g = daily_volume_general()
+    update_volumes_worksheet_beauty(data_b)
+    update_volumes_worksheet_general(data_g)
+    
+    
+    
+    
+print("Welcome to the DC staff schedule assistant...\n")
+print("Data will only be acccepted if it is doe full 5 seperated by a comma..\n")
+print("Example: 14543, 34322, 23253, 23242, 23232")
+    
 
 main()
