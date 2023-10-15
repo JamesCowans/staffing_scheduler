@@ -96,7 +96,7 @@ def update_volumes_worksheet_beauty(data_b):
     delivery_volumes_beauty_worksheet.append_row(data_b)
     print("Beauty products spreadsheet updated sucessfully...\n")
 
-def calculate_staff_requirements_decant(gen_d):
+def calculate_staff_requirements_decant(data_g):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
@@ -106,16 +106,16 @@ def calculate_staff_requirements_decant(gen_d):
 
     decant = SHEET.worksheet("decant").get_all_values()
     decant_row = decant[-1]
-   #print(decant)
+   
 
     gen_requirements = []
-    for volume, staffing in zip(gen_d, decant_row):
+    for volume, staffing in zip(data_g, decant_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
         gen_requirements.append(req)
     print(gen_requirements)
 
-def calculate_staff_requirements_inbound(gen_i):
+def calculate_staff_requirements_inbound(data_g):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
@@ -128,13 +128,13 @@ def calculate_staff_requirements_inbound(gen_i):
    
 
     gen_requirements = []
-    for volume, staffing in zip(gen_i, inbound_row):
+    for volume, staffing in zip(data_g, inbound_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
         gen_requirements.append(req)
     print(gen_requirements)
 
-def calculate_staff_requirements_picking(gen_p):
+def calculate_staff_requirements_picking(data_g):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
@@ -147,13 +147,13 @@ def calculate_staff_requirements_picking(gen_p):
   
 
     gen_requirements = []
-    for volume, staffing in zip(gen_p, picking_row):
+    for volume, staffing in zip(data_g, picking_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
         gen_requirements.append(req)
     print(gen_requirements)
 
-def calculate_staff_requirements_putaway(gen_pa):
+def calculate_staff_requirements_putaway(data_g):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
@@ -166,14 +166,14 @@ def calculate_staff_requirements_putaway(gen_pa):
   
 
     gen_requirements = []
-    for volume, staffing in zip(gen_pa, putaway_row):
+    for volume, staffing in zip(data_g, putaway_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
         gen_requirements.append(req)
     print(gen_requirements)
 
 
-def calculate_staff_requirements_beauty(bea_x):
+def calculate_staff_requirements_beauty(data_b):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
@@ -183,7 +183,7 @@ def calculate_staff_requirements_beauty(bea_x):
     xdock_row = xdock[-1]
   
     gen_requirements = []
-    for volume, staffing in zip(bea_x, xdock_row):
+    for volume, staffing in zip(data_b, xdock_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
         gen_requirements.append(req)
