@@ -1,3 +1,4 @@
+import math 
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -16,9 +17,9 @@ decant = SHEET.worksheet('decant')
 inbound = SHEET.worksheet('inbound')
 picking = SHEET.worksheet('picking')
 putaway = SHEET.worksheet('putaway')
-xdoxk = SHEET.worksheet('xdock')
+xdock = SHEET.worksheet('xdock')
 
-data = decant.get_all_values()
+#data = decant.get_all_values()
 
 
 def daily_volume_general():
@@ -164,7 +165,7 @@ def calculate_staff_requirements_putaway(data_g):
     putaway = SHEET.worksheet("putaway").get_all_values()
     putaway_row = putaway[-1]
   
-
+    #data_g_percentage = int(data_g) // 130
     gen_requirements = []
     for volume, staffing in zip(data_g, putaway_row):
         req_hours = int(volume) // int(staffing)
@@ -182,12 +183,21 @@ def calculate_staff_requirements_beauty(data_b):
     xdock = SHEET.worksheet("xdock").get_all_values()
     xdock_row = xdock[-1]
   
-    gen_requirements = []
+    staff_beauty = []
     for volume, staffing in zip(data_b, xdock_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        gen_requirements.append(req)
-    print(gen_requirements)
+        staff_beauty.append(req)
+    return staff_beauty
+
+def update_volumes_worksheet_beauty_staff(staff_beauty):
+    """
+    Adds the delivery volume to the beauty products spreadsheet
+    """
+    print("Updating Beauty products spreadsheet...\n")
+    staff_beauty_worksheet = SHEET.worksheet('staff_beauty')
+    staff_beauty_worksheet.append_row(staff_beauty)
+    print("Beauty products spreadsheet updated sucessfully...\n")
 
 
 
@@ -197,14 +207,15 @@ def main():
     """
     
     data_b = daily_volume_beauty()
-    data_g = daily_volume_general()
+   # data_g = daily_volume_general()
     update_volumes_worksheet_beauty(data_b)
-    update_volumes_worksheet_general(data_g)
-    decant_staff_req = calculate_staff_requirements_decant(data_g)
-    inbound_staff_req = calculate_staff_requirements_inbound(data_g)
-    picking_staff_req = calculate_staff_requirements_picking(data_g)
-    putaway_staff_req = calculate_staff_requirements_putaway(data_g)
-    x_dock_staff_req = calculate_staff_requirements_beauty(data_b)
+    #update_volumes_worksheet_general(data_g)
+    #decant_staff_req = calculate_staff_requirements_decant(data_g)
+    #inbound_staff_req = calculate_staff_requirements_inbound(data_g)
+    #picking_staff_req = calculate_staff_requirements_picking(data_g)
+   # putaway_staff_req = calculate_staff_requirements_putaway(data_g)
+    staff_beauty = calculate_staff_requirements_beauty(data_b)
+    update_volumes_worksheet_beauty_staff(staff_beauty)
     
     
     
