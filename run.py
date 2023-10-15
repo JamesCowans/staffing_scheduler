@@ -13,6 +13,10 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('dc_productivity')
 
 decant = SHEET.worksheet('decant')
+inbound = SHEET.worksheet('inbound')
+picking = SHEET.worksheet('picking')
+putaway = SHEET.worksheet('putaway')
+xdoxk = SHEET.worksheet('xdock')
 
 data = decant.get_all_values()
 
@@ -111,8 +115,80 @@ def calculate_staff_requirements_decant(gen_d):
         gen_requirements.append(req)
     print(gen_requirements)
 
+def calculate_staff_requirements_inbound(gen_i):
+    """
+    Calculates the staffing requirements of the decant department,
+    all colleagues have a productivity target set within the decant spreadsheet by day
+    and all work 8 hours per day.
+    """
+    
 
-#def calculate_staff_requirements_beauty():
+    inbound = SHEET.worksheet("inbound").get_all_values()
+    inbound_row = inbound[-1]
+   
+
+    gen_requirements = []
+    for volume, staffing in zip(gen_i, inbound_row):
+        req_hours = int(volume) // int(staffing)
+        req = (req_hours) // 8 
+        gen_requirements.append(req)
+    print(gen_requirements)
+
+def calculate_staff_requirements_picking(gen_p):
+    """
+    Calculates the staffing requirements of the decant department,
+    all colleagues have a productivity target set within the decant spreadsheet by day
+    and all work 8 hours per day.
+    """
+    
+
+    picking = SHEET.worksheet("picking").get_all_values()
+    picking_row = picking[-1]
+  
+
+    gen_requirements = []
+    for volume, staffing in zip(gen_p, picking_row):
+        req_hours = int(volume) // int(staffing)
+        req = (req_hours) // 8 
+        gen_requirements.append(req)
+    print(gen_requirements)
+
+def calculate_staff_requirements_putaway(gen_pa):
+    """
+    Calculates the staffing requirements of the decant department,
+    all colleagues have a productivity target set within the decant spreadsheet by day
+    and all work 8 hours per day.
+    """
+    
+
+    putaway = SHEET.worksheet("putaway").get_all_values()
+    putaway_row = putaway[-1]
+  
+
+    gen_requirements = []
+    for volume, staffing in zip(gen_pa, putaway_row):
+        req_hours = int(volume) // int(staffing)
+        req = (req_hours) // 8 
+        gen_requirements.append(req)
+    print(gen_requirements)
+
+
+def calculate_staff_requirements_beauty(bea_x):
+    """
+    Calculates the staffing requirements of the decant department,
+    all colleagues have a productivity target set within the decant spreadsheet by day
+    and all work 8 hours per day.
+    """
+    xdock = SHEET.worksheet("xdock").get_all_values()
+    xdock_row = xdock[-1]
+  
+    gen_requirements = []
+    for volume, staffing in zip(bea_x, xdock_row):
+        req_hours = int(volume) // int(staffing)
+        req = (req_hours) // 8 
+        gen_requirements.append(req)
+    print(gen_requirements)
+
 
 
 def main():
@@ -125,6 +201,10 @@ def main():
     update_volumes_worksheet_beauty(data_b)
     update_volumes_worksheet_general(data_g)
     decant_staff_req = calculate_staff_requirements_decant(data_g)
+    inbound_staff_req = calculate_staff_requirements_inbound(data_g)
+    picking_staff_req = calculate_staff_requirements_picking(data_g)
+    putaway_staff_req = calculate_staff_requirements_putaway(data_g)
+    x_dock_staff_req = calculate_staff_requirements_beauty(data_b)
     
     
     
