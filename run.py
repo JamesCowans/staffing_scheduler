@@ -109,12 +109,12 @@ def calculate_staff_requirements_decant(data_g):
     decant_row = decant[-1]
    
 
-    gen_requirements = []
+    decant_staff_req = []
     for volume, staffing in zip(data_g, decant_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        gen_requirements.append(req)
-    print(gen_requirements)
+        decant_staff_req.append(req)
+    return decant_staff_req
 
 def calculate_staff_requirements_inbound(data_g):
     """
@@ -128,12 +128,12 @@ def calculate_staff_requirements_inbound(data_g):
     inbound_row = inbound[-1]
    
 
-    gen_requirements = []
+    inbound_staff_req = []
     for volume, staffing in zip(data_g, inbound_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        gen_requirements.append(req)
-    print(gen_requirements)
+        inbound_staff_req.append(req)
+    return inbound_staff_req
 
 def calculate_staff_requirements_picking(data_g):
     """
@@ -147,12 +147,12 @@ def calculate_staff_requirements_picking(data_g):
     picking_row = picking[-1]
   
 
-    gen_requirements = []
+    picking_staff_req = []
     for volume, staffing in zip(data_g, picking_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        gen_requirements.append(req)
-    print(gen_requirements)
+        picking_staff_req .append(req)
+    return picking_staff_req 
 
 def calculate_staff_requirements_putaway(data_g):
     """
@@ -166,12 +166,12 @@ def calculate_staff_requirements_putaway(data_g):
     putaway_row = putaway[-1]
   
     #data_g_percentage = int(data_g) // 130
-    gen_requirements = []
+    putaway_staff_req = []
     for volume, staffing in zip(data_g, putaway_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        gen_requirements.append(req)
-    print(gen_requirements)
+        putaway_staff_req.append(req)
+    return putaway_staff_req
 
 
 def calculate_staff_requirements_beauty(data_b):
@@ -192,12 +192,51 @@ def calculate_staff_requirements_beauty(data_b):
 
 def update_volumes_worksheet_beauty_staff(staff_beauty):
     """
-    Adds the delivery volume to the beauty products spreadsheet
+    Updates the Beauty staff schedule with the required number of staff.
     """
     print("Updating Beauty products spreadsheet...\n")
     staff_beauty_worksheet = SHEET.worksheet('staff_beauty')
     staff_beauty_worksheet.append_row(staff_beauty)
     print("Beauty products spreadsheet updated sucessfully...\n")
+
+def update_volumes_worksheet_putaway_staff(putaway_staff_req):
+    """
+    Updates the Putaway staff schedule with the required number of staff.
+    """
+    print("Updating Putaway staff spreadsheet...\n")
+    staff_putaway_worksheet = SHEET.worksheet('staff_putaway')
+    staff_putaway_worksheet.append_row(putaway_staff_req)
+    print("Putaway staff spreadsheet updated sucessfully...\n")
+
+def update_volumes_worksheet_decant_staff(decant_staff_req):
+    """
+    Updates the Putaway staff schedule with the required number of staff.
+    """
+    print("Updating Decant staff spreadsheet...\n")
+    staff_putaway_worksheet = SHEET.worksheet('staff_decant')
+    staff_putaway_worksheet.append_row(decant_staff_req)
+    print("Decant staff spreadsheet updated sucessfully...\n")
+
+def update_volumes_worksheet_inbound_staff(inbound_staff_req):
+    """
+    Updates the Inbound staff schedule with the required number of staff.
+    """
+    print("Updating Inbound staff spreadsheet...\n")
+    staff_inbound_worksheet = SHEET.worksheet('staff_inbound')
+    staff_inbound_worksheet.append_row(inbound_staff_req)
+    print("Inbound staff spreadsheet updated sucessfully...\n")
+
+def update_volumes_worksheet_picking_staff(picking_staff_req):
+    """
+    Updates the Picking staff schedule with the required number of staff.
+    """
+    print("Updating Picking staff spreadsheet...\n")
+    staff_picking_worksheet = SHEET.worksheet('staff_picking')
+    staff_picking_worksheet.append_row(picking_staff_req)
+    print("Picking staff spreadsheet updated sucessfully...\n")
+
+
+
 
 
 
@@ -207,21 +246,25 @@ def main():
     """
     
     data_b = daily_volume_beauty()
-   # data_g = daily_volume_general()
+    data_g = daily_volume_general()
     update_volumes_worksheet_beauty(data_b)
-    #update_volumes_worksheet_general(data_g)
-    #decant_staff_req = calculate_staff_requirements_decant(data_g)
-    #inbound_staff_req = calculate_staff_requirements_inbound(data_g)
-    #picking_staff_req = calculate_staff_requirements_picking(data_g)
-   # putaway_staff_req = calculate_staff_requirements_putaway(data_g)
+    update_volumes_worksheet_general(data_g)
+    decant_staff_req = calculate_staff_requirements_decant(data_g)
+    inbound_staff_req = calculate_staff_requirements_inbound(data_g)
+    picking_staff_req = calculate_staff_requirements_picking(data_g)
+    putaway_staff_req = calculate_staff_requirements_putaway(data_g)
     staff_beauty = calculate_staff_requirements_beauty(data_b)
     update_volumes_worksheet_beauty_staff(staff_beauty)
+    update_volumes_worksheet_putaway_staff(putaway_staff_req)
+    update_volumes_worksheet_decant_staff(decant_staff_req)
+    update_volumes_worksheet_inbound_staff(inbound_staff_req)
+    update_volumes_worksheet_picking_staff(picking_staff_req)
     
     
     
     
 print("Welcome to the DC staff schedule assistant...\n")
-print("Data will only be acccepted if it is doe full 5 seperated by a comma..\n")
+print("Data must be all 5 days, each day seperated by a comma..\n")
 print("Example: 14543, 34322, 23253, 23242, 23232")
     
 
