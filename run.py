@@ -1,4 +1,3 @@
-import math 
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -13,22 +12,13 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('dc_productivity')
 
-#decant = SHEET.worksheet('decant')
-#inbound = SHEET.worksheet('inbound')
-#picking = SHEET.worksheet('picking')
-#putaway = SHEET.worksheet('putaway')
-#xdock = SHEET.worksheet('xdock')
-
-#data = decant.get_all_values()
-
-
 def daily_volume_general():
     """
     Asks the user to input the unit volume of delivery colleagues will be expected to process
     """
     while True:
 
-        general_vol = input("Please enter volumes for general merchandise deliveries for the the week: ")
+        general_vol = input("Please enter General Merchandise volumes for the the week:\n")
 
         daily_vol_gen = general_vol.split(",")
         validate_data(daily_vol_gen)
@@ -47,7 +37,7 @@ def daily_volume_beauty():
 
     while True:
 
-        beauty_vol = input("Please enter volumes for beauty deliveries for the the week: ")
+        beauty_vol = input("Please enter Beauty volumes for the week:\n")
     
         daily_vol_bty = beauty_vol.split(",")
         validate_data(daily_vol_bty)
@@ -66,10 +56,10 @@ def validate_data(values):
     """
     try:
         [int(value) for value in values]
-        if len(values) !=5:
-            raise ValueError( f"The number of values entered must total 5, you entered{values}")
+        if len(values) != 5:
+            raise ValueError(f"5 values required, you entered {len(values)}")
     except ValueError as e:
-        print(f"Invalid date: {e}, please try again.\n")
+        print(f"Invalid data: {e}, please try again.\n")
         return False
 
     return True
@@ -101,7 +91,8 @@ def calculate_staff_requirements_decant(data_g):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
-    and all work 8 hours per day.
+    and all work 8 hours per day, if the amount of work to do would require less than
+    one colleague, the program defaults to 1 colleague as a precaution.
     """
     
 
@@ -121,9 +112,10 @@ def calculate_staff_requirements_decant(data_g):
 
 def calculate_staff_requirements_inbound(data_g):
     """
-    Calculates the staffing requirements of the decant department,
+    Calculates the staffing requirements of the inbound department,
     all colleagues have a productivity target set within the decant spreadsheet by day
-    and all work 8 hours per day.
+    and all work 8 hours per day, if the amount of work to do would require less than
+    one colleague, the program defaults to 1 colleague as a precaution.
     """
     
 
@@ -143,13 +135,15 @@ def calculate_staff_requirements_inbound(data_g):
 
 def calculate_staff_requirements_picking(data_g):
     """
-    Calculates the staffing requirements of the decant department,
+    Calculates the staffing requirements of the picking department,
     all colleagues have a productivity target set within the decant spreadsheet by day
-    and all work 8 hours per day.
+    and all work 8 hours per day, if the amount of work to do would require less than
+    one colleague, the program defaults to 1 colleague as a precaution.
     """
     picking = SHEET.worksheet("picking").get_all_values()
     picking_row = picking[-1]
   
+
     picking_staff_req = []
     for volume, staffing in zip(data_g, picking_row):
         req_hours = int(volume) // int(staffing)
@@ -162,9 +156,10 @@ def calculate_staff_requirements_picking(data_g):
 
 def calculate_staff_requirements_putaway(data_g):
     """
-    Calculates the staffing requirements of the decant department,
+    Calculates the staffing requirements of the putaway department,
     all colleagues have a productivity target set within the decant spreadsheet by day
-    and all work 8 hours per day.
+    and all work 8 hours per day, if the amount of work to do would require less than
+    one colleague, the program defaults to 1 colleague as a precaution.
     """
     
 
@@ -187,7 +182,8 @@ def calculate_staff_requirements_beauty(data_b):
     """
     Calculates the staffing requirements of the decant department,
     all colleagues have a productivity target set within the decant spreadsheet by day
-    and all work 8 hours per day.
+    and all work 8 hours per day, if the amount of work to do would require less than
+    one colleague, the program defaults to 1 colleague as a precaution.
     """
     xdock = SHEET.worksheet("xdock").get_all_values()
     xdock_row = xdock[-1]
