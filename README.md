@@ -20,6 +20,9 @@ daily_volume_beauty - This allowed the user to input each days delivery for Beau
 
 ## Worksheet Information
 
+[Worksheet link](https://docs.google.com/spreadsheets/d/1VbqBGZ6_eDtFS35rRN_9dYAKmh-yTLNb64U_x0tdLK4/edit?usp=sharing)
+
+
 The Google Docs sheet has 12 tabs:
 
 delivery_volumes_general - This is where the user inputed General Merchandise data will be uploaded to 
