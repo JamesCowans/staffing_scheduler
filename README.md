@@ -1,32 +1,46 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# DC Staff Scheduler
 
-Welcome,
+## Project Brief
+The brief for this project came from a busy Distribution Centre wanting to look at continous improvement from a staffing perspective. 
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+The delivery volumes for the week would be known in advance and they also know how many units each department can process in an hour.
 
-## Reminders
+The General Merchandise side of the operation had the most complex path, needing to go through inbound processing, decanting, picking and putaway, the beauty side was only processed once.
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+The idea was to allow a user to enter the weekly volumes for each General Merchandise and Beauty seperatly, 5 days in total Monday - Friday which covered the working week.
 
-## Creating the Heroku app
+The staffing requirements were to complete all work within the day that the delivery arrived.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## Functions
 
-1. `heroku/python`
-2. `heroku/nodejs`
+daily_volume_general - This allowed the user to input each days delivery for General Merchandise.
+daily_volume_beauty - This allowed the user to input each days delivery for Beauty products.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
 
-Connect your GitHub repository and deploy as normal.
+## Worksheet Information
 
-## Constraints
+The Google Docs sheet has 12 tabs:
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+delivery_volumes_general - This is where the user inputed General Merchandise data will be uploaded to 
 
----
+delivery_volumes_beauty - This is where the user inputed Beauty delivery data will be uploaded to
 
-Happy coding!
+There are also 5 tabs for the staffing requirments of each department, on top of this there are an additonal 5 tabs that allow the department managers to input their most up to date hourly productivity targets, these are what the program uses to determine the daily staffing requirments.
+
+
+
+## Future Developments
+
+In the future I would like to adapt the program to schedule staff more effectively, currently the work pattern has been set as an 8am start and working for 8 hours, with future development the program should be able to take into account how long each process will need to run before the next process can start. This should feed into a longer working day, scheduling more effectivly to improve the flow of work.
+
+## Bugs and testing
+
+There is a known issue with the error handling, when the program finds an error it is displaying the error message twice before asking the user to re-enter the correct information, other than this it is able to handle incorrect number of variable or incorrect type correctly.
+
+
+
+
+
+
+
