@@ -113,7 +113,10 @@ def calculate_staff_requirements_decant(data_g):
     for volume, staffing in zip(data_g, decant_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        decant_staff_req.append(req)
+        if (req) == 0:
+            decant_staff_req.append(1)
+        else:
+            decant_staff_req.append(req)
     return decant_staff_req
 
 def calculate_staff_requirements_inbound(data_g):
@@ -132,7 +135,10 @@ def calculate_staff_requirements_inbound(data_g):
     for volume, staffing in zip(data_g, inbound_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        inbound_staff_req.append(req)
+        if (req) == 0:
+            inbound_staff_req.append(1)
+        else:
+            inbound_staff_req.append(req)
     return inbound_staff_req
 
 def calculate_staff_requirements_picking(data_g):
@@ -141,17 +147,17 @@ def calculate_staff_requirements_picking(data_g):
     all colleagues have a productivity target set within the decant spreadsheet by day
     and all work 8 hours per day.
     """
-    
-
     picking = SHEET.worksheet("picking").get_all_values()
     picking_row = picking[-1]
   
-
     picking_staff_req = []
     for volume, staffing in zip(data_g, picking_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        picking_staff_req .append(req)
+        if (req) == 0:
+            picking_staff_req.append(1)
+        else:
+            picking_staff_req.append(req)
     return picking_staff_req 
 
 def calculate_staff_requirements_putaway(data_g):
@@ -170,7 +176,10 @@ def calculate_staff_requirements_putaway(data_g):
     for volume, staffing in zip(data_g, putaway_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        putaway_staff_req.append(req)
+        if (req) == 0:
+            putaway_staff_req.append(1)
+        else:
+            putaway_staff_req.append(req)
     return putaway_staff_req
 
 
