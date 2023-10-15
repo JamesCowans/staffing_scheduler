@@ -13,11 +13,11 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('dc_productivity')
 
-decant = SHEET.worksheet('decant')
-inbound = SHEET.worksheet('inbound')
-picking = SHEET.worksheet('picking')
-putaway = SHEET.worksheet('putaway')
-xdock = SHEET.worksheet('xdock')
+#decant = SHEET.worksheet('decant')
+#inbound = SHEET.worksheet('inbound')
+#picking = SHEET.worksheet('picking')
+#putaway = SHEET.worksheet('putaway')
+#xdock = SHEET.worksheet('xdock')
 
 #data = decant.get_all_values()
 
@@ -187,8 +187,15 @@ def calculate_staff_requirements_beauty(data_b):
     for volume, staffing in zip(data_b, xdock_row):
         req_hours = int(volume) // int(staffing)
         req = (req_hours) // 8 
-        staff_beauty.append(req)
+        if (req) == 0 :
+            staff_beauty.append(1)
+        else:
+            staff_beauty.append(req)
     return staff_beauty
+    
+    #return staff_beauty
+
+    
 
 def update_volumes_worksheet_beauty_staff(staff_beauty):
     """
