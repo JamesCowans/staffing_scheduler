@@ -279,5 +279,5 @@ print("Welcome to the DC staff schedule assistant...\n")
 print("Data must be all 5 days, each day seperated by a comma..\n")
 print("Example: 14543, 34322, 23253, 23242, 23232")
     
-
+name=input("Please enter your name:\n")
 main()
