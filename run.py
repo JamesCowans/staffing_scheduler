@@ -18,7 +18,7 @@ def daily_volume_general():
     """
     while True:
 
-        general_vol = input("Please enter General Merchandise volumes for the the week:\n")
+        general_vol = input("Please enter General Merchandise volumes for the week: \n")
 
         daily_vol_gen = general_vol.split(",")
         validate_data(daily_vol_gen)
@@ -37,7 +37,7 @@ def daily_volume_beauty():
 
     while True:
 
-        beauty_vol = input("Please enter Beauty volumes for the week:\n")
+        beauty_vol = input("Please enter Beauty volumes for the week: \n")
     
         daily_vol_bty = beauty_vol.split(",")
         validate_data(daily_vol_bty)
